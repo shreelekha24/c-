@@ -11,31 +11,23 @@
  */
 class Solution {
 public:
-void solve(TreeNode* root,vector<int>&v)
-{
-    if(root==NULL)
-    return;
-    v.push_back(root->val);
-    solve(root->left,v);
-    solve(root->right,v);
-}
-TreeNode* build(vector<int>&pre,int i)
-{ 
-    if(i>=pre.size()) return nullptr;
-    TreeNode* link=new TreeNode(pre[i++]);
-    link->right=build(pre,i);
-    link->left=NULL;
-    return link;
-}
-
 void flatten(TreeNode* root) {
-    if(root==NULL)
-    return;
-    vector<int>pre;
-    solve(root,pre);
-    TreeNode* newRoot=build(pre,0);
-    root->left = NULL;
-    root->right = newRoot->right;
-    root->val = newRoot->val;
+    TreeNode* cur=root;
+    while(cur!=NULL)
+    {
+        if(cur->left)
+        {
+            TreeNode* prev=cur->left;
+            while(prev->right)
+            {
+                prev=prev->right;
+            }
+            prev->right=cur->right;
+            cur->right=cur->left;
+                cur->left=NULL;
+        }
+        cur=cur->right;
+    }
+    
     }
 };
