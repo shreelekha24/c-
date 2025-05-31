@@ -19,7 +19,7 @@ void solve(TreeNode* root,vector<int>&v)
     solve(root->left,v);
     solve(root->right,v);
 }
-TreeNode* build(vector<int>&pre,int& i)
+TreeNode* build(vector<int>&pre,int i)
 { 
     if(i>=pre.size()) return nullptr;
     TreeNode* link=new TreeNode(pre[i++]);
@@ -33,8 +33,7 @@ void flatten(TreeNode* root) {
     return;
     vector<int>pre;
     solve(root,pre);
-    int i=0;
-    TreeNode* newRoot=build(pre,i);
+    TreeNode* newRoot=build(pre,0);
     root->left = NULL;
     root->right = newRoot->right;
     root->val = newRoot->val;
