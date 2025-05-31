@@ -23,8 +23,8 @@ TreeNode* build(vector<int>&pre,int i)
 { 
     if(i>=pre.size()) return nullptr;
     TreeNode* link=new TreeNode(pre[i++]);
-    link->left=NULL;
     link->right=build(pre,i);
+    link->left=NULL;
     return link;
 }
 
