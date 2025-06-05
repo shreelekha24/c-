@@ -15,32 +15,34 @@ int solve(vector<vector<int>>&matrix,int i,int j, int n,vector<vector<int>>&dp)
     int minFallingPathSum(vector<vector<int>>& matrix) {
         int n=matrix.size();
         int sum=INT_MAX;
-        vector<int>dp(n);
+        //vector<int>dp(n);
        /* for(int i=0;i<matrix.size();i++)
         {
         vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
         int count=solve(matrix,0,i,n,dp);
         sum=min(sum,count);
         }*/
-        dp=matrix[0];
+        //dp=matrix[0];
+         vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+         dp[0]=matrix[0];
         for(int i=1;i<n;i++)
         {
-            vector<int>temp(n);
             for(int j=0;j<n;j++)
             {
                 int one=INT_MAX,two=INT_MAX,three=INT_MAX;
                 if(j>0)
-                one=matrix[i][j]+dp[j-1];
+                one=matrix[i][j]+dp[i-1][j-1];
                 if(j<n-1)
-                two=matrix[i][j]+dp[j+1];
-                three=matrix[i][j]+dp[j];
-                temp[j]=min({one,two,three});
+                two=matrix[i][j]+dp[i-1][j+1];
+                three=matrix[i][j]+dp[i-1][j];
+                dp[i][j]=min({one,two,three});
             }
-            dp=temp;
         }
-        int ans=INT_MAX;
+       int ans=INT_MAX;
+        /*for(int i=0;i<n;i++)
+        ans=min(ans,dp[i]);*/
         for(int i=0;i<n;i++)
-        ans=min(ans,dp[i]);
+        ans=min(ans,dp[n-1][i]);
         return ans;
     }
 };
