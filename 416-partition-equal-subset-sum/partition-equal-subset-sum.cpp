@@ -15,8 +15,25 @@ bool solve(vector<int>&nums,int i,long long sum,long long total,vector<vector<lo
 }
     bool canPartition(vector<int>& nums) {
         long long total=accumulate(nums.begin(),nums.end(),0);
+        if (total % 2 != 0) return false;
+        int target=total/2;
         long long sum=0;
-        vector<vector<long long>>dp(nums.size()+1,vector<long long>(total+1,-1));
-        return solve(nums,0,sum,total,dp);
+        vector<vector<bool>>dp(nums.size()+1,vector<bool>(target+1,false));
+        for(int i=0;i<nums.size();i++)
+        {
+            dp[i][0]=true;
+        }
+        for(int i=1;i<=nums.size();i++)
+        {
+            for(int j=1;j<=target;j++)
+            {
+                bool one=false;
+                if(j>=nums[i-1])
+                one=dp[i-1][j-nums[i-1]];
+                bool two=dp[i-1][j];
+                dp[i][j]=one||two;
+            }
+        }
+        return dp[nums.size()-1][target];
     }
 };
