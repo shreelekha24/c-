@@ -18,22 +18,22 @@ bool solve(vector<int>&nums,int i,long long sum,long long total,vector<vector<lo
         if (total % 2 != 0) return false;
         int target=total/2;
         long long sum=0;
-        vector<vector<bool>>dp(nums.size()+1,vector<bool>(target+1,false));
-        for(int i=0;i<nums.size();i++)
-        {
-            dp[i][0]=true;
-        }
+        //vector<vector<bool>>dp(nums.size()+1,vector<bool>(target+1,false));
+        vector<bool>dp(target+1,false);
+        dp[0]=true;
         for(int i=1;i<=nums.size();i++)
         {
+            vector<bool>temp(target+1);
             for(int j=1;j<=target;j++)
             {
                 bool one=false;
                 if(j>=nums[i-1])
-                one=dp[i-1][j-nums[i-1]];
-                bool two=dp[i-1][j];
-                dp[i][j]=one||two;
+                one=dp[j-nums[i-1]];
+                bool two=dp[j];
+                temp[j]=one||two;
             }
+            dp=temp;
         }
-        return dp[nums.size()-1][target];
+        return dp[target];
     }
 };
