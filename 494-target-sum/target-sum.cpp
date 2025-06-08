@@ -18,27 +18,30 @@ int solve(vector<int>&nums,int i,int target,vector<vector<int>>&dp,int total)
 }
     int findTargetSumWays(vector<int>& nums, int target) {
         int total=accumulate(nums.begin(),nums.end(),0);
-        vector<vector<int>>dp(nums.size(),vector<int>(2*total+1,0));
+       // vector<vector<int>>dp(nums.size(),vector<int>(2*total+1,0));
         if (abs(target) > total) return 0;
         //int cont=solve(nums,nums.size()-1,target,dp,total);
+        vector<int>dp(2*total+1,0);
         if(nums[0]==0)
-        dp[0][total]=2;
+        dp[total]=2;
         else{ 
-        dp[0][total-nums[0]]=1;
-        dp[0][nums[0]+total]=1;
+        dp[total-nums[0]]=1;
+        dp[nums[0]+total]=1;
         }
         for(int i=1;i<nums.size();i++)
         {
+            vector<int>temp(2*total+1);
             for(int j=-total;j<=abs(total);j++)
             {
                 int take=0;
                 if(j-nums[i]+total>=0 && j-nums[i]+total<2*total+1)
-                take+=dp[i-1][j-nums[i]+total];
+                take+=dp[j-nums[i]+total];
                 if(j+nums[i]+total>=0 && j+nums[i]+total<2*total+1)
-                take+=dp[i-1][j+nums[i]+total];
-                dp[i][j+total]=take;
+                take+=dp[j+nums[i]+total];
+                temp[j+total]=take;
             }
+            dp=temp;
         }
-        return dp[nums.size()-1][target+total];
+        return dp[target+total];
     }
 };
