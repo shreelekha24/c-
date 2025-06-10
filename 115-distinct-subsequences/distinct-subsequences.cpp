@@ -13,19 +13,19 @@ int solve(string s,string t,int i,int j,vector<vector<int>>&dp){
     return dp[i][j]=one;
 }
     int numDistinct(string s, string t) {
-        vector<vector<double>>dp(s.size()+1,vector<double>(t.size()+1,0));
-        for(int i=0;i<=s.size();i++){
-            dp[i][0]=1;
-        }
+      //  vector<vector<double>>dp(s.size()+1,vector<double>(t.size()+1,0));
+      vector<double>dp(t.size()+1,0),temp(t.size()+1);
+            dp[0]=1,temp[0]=1;
         for(int i=1;i<=s.size();i++){
             for(int j=1;j<=t.size();j++){
                 double one=0,two=0;
                 if(s[i-1]==t[j-1])
-                one=dp[i-1][j-1];
-                two=dp[i-1][j];
-                dp[i][j]=(one+two);
+                one=dp[j-1];
+                two=dp[j];
+                temp[j]=(one+two);
             }
+            dp=temp;
         }
-        return (int)dp[s.size()][t.size()];
+        return (int)dp[t.size()];
     }
 };
