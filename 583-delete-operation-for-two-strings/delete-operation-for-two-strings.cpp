@@ -9,14 +9,17 @@ int solve(string word1,string word2,int i,int j,vector<vector<int>>&dp){
     return dp[i][j]=max(solve(word1,word2,i-1,j,dp),solve(word1,word2,i,j-1,dp));
 }
     int minDistance(string word1, string word2) {
-        vector<vector<int>>dp(word1.size()+1,vector<int>(word2.size()+1,0));
+       // vector<vector<int>>dp(word1.size()+1,vector<int>(word2.size()+1,0));
+       vector<int>dp(word2.size()+1,0);
         for(int i=1;i<=word1.size();i++){
+            vector<int>temp(word2.size()+1);
             for(int j=1;j<=word2.size();j++)
             {
-                if(word1[i-1]==word2[j-1]) dp[i][j]=1+dp[i-1][j-1];
-                else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                if(word1[i-1]==word2[j-1]) temp[j]=1+dp[j-1];
+                else temp[j]=max(dp[j],temp[j-1]);
             }
+            dp=temp;
         }
-        return word1.size()+word2.size()-2*dp[word1.size()][word2.size()];
+        return word1.size()+word2.size()-2*dp[word2.size()];
     }
 };
