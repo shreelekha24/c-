@@ -19,15 +19,11 @@ int solve(vector<int>& prices,int count,int i,int k,vector<vector<int>>&dp){
             vector<int>temp(2*k+1,0);
             for(int count=2*k-1;count>=0;count--){
                 if(count%2==0){
-                int buy = (count + 1 <= 2 * k) ? -prices[i] + dp[count + 1] : 0;
-                int skip = dp[count];
-                temp[count] = max(buy, skip);
+                temp[count]=max({-prices[i]+dp[count+1],dp[count]});
                 }
                 else
                 {
-                int sell = (count + 1 <= 2 * k) ? prices[i] + dp[count + 1] : 0;
-                int skip = dp[count];
-                temp[count] = max(sell, skip);
+                temp[count]=max({prices[i]+dp[count+1],dp[count]});
                 }
             }
             dp=temp;
