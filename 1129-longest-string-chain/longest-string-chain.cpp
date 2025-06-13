@@ -35,11 +35,13 @@ int longestStrChain(vector<string>& words) {
     sort(words.begin(), words.end(), [](const string &a, const string &b) {
     return a.size() < b.size();
 });
-    vector<vector<int>>dp(words.size()+1,vector<int>(words.size()+1,0));
+   // vector<vector<int>>dp(words.size()+1,vector<int>(words.size()+1,0));
+   vector<int>dp(words.size()+1,0);
         for(int i=words.size()-1;i>=0;i--){
+            vector<int>temp(words.size()+1);
             for(int prev=i-1;prev>=-1;prev--){
                 int one=0,two=0;
-                two=dp[i+1][prev+1];
+                two=dp[prev+1];
                if(prev == -1 || words[prev].size() < words[i].size())
                {
                   bool yes = true;
@@ -59,11 +61,12 @@ int longestStrChain(vector<string>& words) {
                     }
                 }
                 if(yes)
-                 one =  1 + dp[i+1][i + 1];
+                 one =  1 + dp[i + 1];
                }
-               dp[i][prev+1]=max(one,two);
+               temp[prev+1]=max(one,two);
             }
+            dp=temp;
         }
-        return dp[0][0];
+        return dp[0];
 }
 };
