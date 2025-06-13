@@ -13,18 +13,17 @@ int solve(vector<int>&nums,int count,int i,vector<vector<int>>&dp)
     return dp[i][count+1]=two;
 }
     int lengthOfLIS(vector<int>& nums) {
-        vector<int>dp(nums.size(),1);
-        for(int i=0;i<nums.size();i++)
+        vector<int>temp;
+        temp.push_back(nums[0]);
+        for(int i=1;i<nums.size();i++)
         {
-            for(int j=0;j<=i;j++)
-            {
-                if(nums[j]<nums[i])
-                dp[i]=max(dp[i],1+dp[j]);
+            if(nums[i]>temp.back())
+            temp.push_back(nums[i]);
+            else{
+                auto it=lower_bound(temp.begin(),temp.end(),nums[i]);
+                *it=nums[i];
             }
         }
-        int ans=INT_MIN;
-        for(int i=0;i<nums.size();i++)
-        ans=max(ans,dp[i]);
-        return ans;
+        return temp.size();
     }
 };
