@@ -21,7 +21,7 @@ int solve(vector<int>&arr,int i,int k,vector<int>&dp)
     return dp[i]=sum;
 }
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
-        vector<int>dp(arr.size()+1,-1);
+        vector<int>dp(arr.size()+1,0);
         for(int i=arr.size()-1;i>=0;i--){
             int maxi=INT_MIN;
             int sum=INT_MIN;
@@ -37,6 +37,6 @@ int solve(vector<int>&arr,int i,int k,vector<int>&dp)
             }
             dp[i]=sum;
         }
-        return dp[0]+1;
+        return dp[0];
     }
 };
