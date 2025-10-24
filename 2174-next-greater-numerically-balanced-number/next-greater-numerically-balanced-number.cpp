@@ -8,16 +8,17 @@ bool check(vector<int>&count)
     }
     return true;
 }
-void solve(vector<int>&v,vector<int>&total,int sum)
+void solve(vector<int>&v,vector<int>&total,int sum,int n)
 {
-   if(sum>0 && check(total)) v.push_back(sum);
+   if(sum>n && check(total)){  v.push_back(sum);
+   return ;}
    if(sum>1224444) return ;
    for(int i=1;i<=7;i++)
    {
       if(total[i]<i)
       {
           total[i]++;
-          solve(v,total,sum*10+i);
+          solve(v,total,sum*10+i,n);
           total[i]--;
       }
    }
@@ -25,12 +26,8 @@ void solve(vector<int>&v,vector<int>&total,int sum)
 int nextBeautifulNumber(int n){ 
         vector<int>v;
         vector<int>total(10,0);
-        solve(v,total,0);
+        solve(v,total,0,n);
         sort(v.begin(),v.end());
-        for(int i=0;i<v.size();i++)
-        {
-            if(v[i]>n) return v[i];
-        }
-        return -1;
+        return v[0];
     }
 };
